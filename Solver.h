@@ -20,6 +20,7 @@ class Solver {
     double d2f_error{};
     double x_of_d2f_err{};
 
+    std::vector<double> F_vector;
     std::vector<double> x_vector;
     std::vector<double> spline_vector;
     std::vector<double> d_s;

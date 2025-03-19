@@ -4,7 +4,7 @@
 /*
 Справка:
 
-Solver Sol(num_nodes, TEST); - создаём решение (число узлов сетки, тип задачи)
+Solver Sol(num_intervals, TEST); - создаём решение (число интервалов сетки, тип задачи)
     Типы задач:
     TEST - тестовая
     MAIN1 - 1 вариант (варианты в пдфке на гугл диске капкаева)
@@ -45,10 +45,12 @@ Solver Sol(num_nodes, TEST); - создаём решение (число узлов сетки, тип задачи)
 
 int main() {
    
-    int num_nodes{ 10 };
-    Solver Sol(num_nodes, TEST);
+    int num_intervals{ 5 };
+    Solver Sol(num_intervals, TEST);
     Sol.Solve();
     
+    auto f = Sol.getF();
+    auto s = Sol.getS();
     //сюда пишется код красивый для вывода таблиц
 
     return 0;

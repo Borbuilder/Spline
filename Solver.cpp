@@ -71,13 +71,14 @@ void Solver::Solve()
     while (xi <= problem.b) {
         x_vector.emplace_back(xi);
         spline_vector.emplace_back(spline(xi));
+        F_vector.emplace_back(problem.f(xi));
         d_s.emplace_back(spline.ds(xi));
         d2_s.emplace_back(spline.d2s(xi));
         d_f.emplace_back(problem.df(xi));
-        d2_f.push_back(problem.d2f(xi));
+        d2_f.emplace_back(problem.d2f(xi));
 
 
-        double tmp = std::abs(f_vector.back() - spline_vector.back());
+        double tmp = std::abs(F_vector.back() - spline_vector.back());
         if (tmp > f_error) {
             f_error = tmp;
             x_of_f_err = xi;
@@ -97,7 +98,7 @@ void Solver::Solve()
 
         xi += N_step;
     }
-    int i=1;
+    
 }
 
 Spline& Solver::getSpline() {
@@ -143,7 +144,7 @@ std::vector<double>& Solver::getX()
 
 std::vector<double>& Solver::getF()
 {
-    return f_vector;
+    return F_vector;
 }
 
 std::vector<double>& Solver::getDF()
