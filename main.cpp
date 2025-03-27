@@ -46,7 +46,7 @@ Solver Sol(num_intervals, TEST); - создаём решение (число интервалов сетки, тип 
 int main() {
    
     int num_intervals{ 5 };
-    Solver Sol(num_intervals, TEST);
+    Solver Sol(num_intervals, MAIN1);
     Sol.Solve();
     
     auto f = Sol.getF();

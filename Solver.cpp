@@ -67,8 +67,9 @@ void Solver::Solve()
 
     N_step = (problem.b - problem.a) / (2 * n);
 
+    double eps = 0.000000001;
     double xi = problem.a;
-    while (xi <= problem.b) {
+    while (xi <= problem.b + eps) {
         x_vector.emplace_back(xi);
         spline_vector.emplace_back(spline(xi));
         F_vector.emplace_back(problem.f(xi));
@@ -98,7 +99,7 @@ void Solver::Solve()
 
         xi += N_step;
     }
-    
+    int i = 0;
 }
 
 Spline& Solver::getSpline() {
