@@ -10,12 +10,15 @@ enum MODE
     NONE, TEST, MAIN1, Main2, Main3, Main4, OSC
 };
 
+
+
 struct Problem {
     //std::function<double(double)> f;
     //std::function<double(double)> df;
     //std::function<double(double)> d2f;
 
     MODE mode{NONE};
+   
     double a{};
     double b{};
     double mu1{};

@@ -5,11 +5,17 @@
 #include "spline.h"
 #include <vector>
 
+enum BORDER_MODE
+{
+    EGU, NOT_EGU, NONE_B
+};
+
 class Solver {
     Problem problem;
     Spline spline;
 
     int n{};
+    BORDER_MODE border_mode{ NONE_B };
     double n_step{};
     double N_step{};
 
@@ -37,7 +43,7 @@ class Solver {
 
 public:
 
-    Solver(int n, MODE _mode);
+    Solver(int _n, MODE _mode, BORDER_MODE _bm);
 
     void Solve();
     Spline& getSpline();

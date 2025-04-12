@@ -2,10 +2,11 @@
 #include "Spline.h"
 
 //Расчёт коэффициентов
-Solver::Solver(int n, MODE _mode): n(n)
+Solver::Solver(int _n, MODE _mode, BORDER_MODE _bm): n(_n), border_mode(_bm)
 {
     Problem tmp_problem(_mode);
     problem = tmp_problem;
+    
 
     n_step = (problem.b - problem.a) / n;
 
@@ -46,11 +47,15 @@ void Solver::calcC() {
         phi[i] = -6 * (f_vector[i + 2] - 2 * f_vector[i + 1] + f_vector[i]) / n_step;
     }
 
-    //    double mu1 = (2.5*F[0] - 6*F[1] + 4.5*F[2] - F[3]) / step / step;
-    //    double mu2 = (-F[n-3] + 4.5*F[n-2] - 6*F[n-1] + 2.5*F[n]) / step / step;
-
-    spline.C = SolveTridiagonalMatrix(AB, C, AB, phi, { 0.0, 0.0 }, { problem.mu1, problem.mu2 });
-    //    spline.C = SolveTridiagonalMatrix(AB, C, AB, phi, {-0.5, -0.5}, {mu1, mu2});
+    if (border_mode == NOT_EGU)
+    {
+        double not_egu_mu1 = (2.5 * f_vector[0] - 6 * f_vector[1] + 4.5 * f_vector[2] - f_vector[3]) / std::pow(n_step, 2); 
+        double not_egu_mu2 = (-f_vector[n - 3] + 4.5 * f_vector[n - 2] - 6 * f_vector[n - 1] + 2.5 * f_vector[n]) / std::pow(n_step, 2);
+        spline.C = SolveTridiagonalMatrix(AB, C, AB, phi, { -0.5, -0.5 }, { not_egu_mu1, not_egu_mu2 });
+    }
+    else {
+        spline.C = SolveTridiagonalMatrix(AB, C, AB, phi, { 0.0, 0.0 }, { problem.mu1, problem.mu2 });
+    }  
 }
 
 void Solver::calcD() {
